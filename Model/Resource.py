@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 
 import math
 from multiprocessing import Process, Lock
@@ -6,7 +7,6 @@ class NaturalResource():
 
     def __init__(self, amount):
         self.__resource = self.generatePrimes(amount)
-        self.__resource.append(self.generateMultiplesOfXUpToY(2, amount))
         self.mutex = Lock()
     
     def generatePrimes(self, n):
