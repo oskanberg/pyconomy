@@ -56,16 +56,9 @@ class LabourMarket(Market):
     
     def addListing(self, labour):
         self._addListing("labour", labour)
-    
-    
 
-
-
-
-        
-a = LabourMarket()
-if a.addListing("Hello"):
-    print "yay"
-types = a._getAllTypes()
-print types
+    # Get mean price of listings
+    def getAmbientPrice():
+        l = [listing.value for listing in self._getAllListings("labour")]
+        return sum(l) / float(len(l))
 

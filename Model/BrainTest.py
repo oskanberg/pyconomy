@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from Brain import EightBitBrain
+from Brains import EightBitBrain
 from Resource import NaturalResource
 from random import shuffle
 
