@@ -61,4 +61,7 @@ class LabourMarket(Market):
     def getAmbientPrice():
         l = [listing.value for listing in self._getAllListings("labour")]
         return sum(l) / float(len(l))
-
+    
+    def getLowestPrice():
+        l = [listing.value for listing in self._getAllListings("labour")]
+        return min(l)
