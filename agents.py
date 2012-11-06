@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
-class Agent(object):
+import time
+from messaging import MessengerObject
+
+class Agent(MessengerObject):
     
-    def __init__(self, messenger, value, land, goods):
+    def __init__(self, name, messenger, value, land, goods):
+        MessengerObject.__init__(self, name, messenger)
         self.__value = value
         self.__land = land
         self.__goods = goods
-        self.__messenger = messenger
         
     def _appreciateValue(self, value):
         self.value += value
@@ -19,15 +22,12 @@ class Agent(object):
     
     def _bequeathLand(self, land):
         self.land += land
-        
-    def _sendMessage(self, message):
-        self.__messenger.put(message)
 
 
 class Kepler(Agent):
     
-    def __init__(self, messenger, value, land, goods, education, labour, food):
-        Agent.__init__(self, messenger, value, land, goods)
+    def __init__(self, name, messenger, value, land, goods, education, labour, food):
+        Agent.__init__(self, name, messenger, value, land, goods)
         self.__education = education
         self.__labour = labour
         self.__food = food
@@ -57,31 +57,36 @@ class Kepler(Agent):
     def eat(self):
         if self.__food > 0:
             self.__food -= 1
-            assert food >= 0, "Kepler food less than 0"
+            assert self.__food >= 0, "Kepler food less than 0"
             return True
         else:
             return False
     
     def findFood(self):
-        # check market        
+        self._postMessage("Finding food. Current food: %s" % str(self.__food), 4)
+        return False # placeholder
 
     def necessities(self):
         if self.eat():
             if self.__food < 10:
                self.findFood()
             else:
-                
+                self._postMessage("Content.", 5)
         else:
             if self.findFood():
-                if not self.eat():
-                    self.die()
+                pass # eat it?
+            else:
+                self.die("starvation")
     
-    def die():
+    def die(self, reason):
         self.__alive = False
+        self._postMessage("Died due to: " + reason + ".", 0)
     
     def run(self):
         while self.__alive:
-            if self.necessities()
+            self.necessities()
+            time.sleep(1)
+        return
 
 
 class Industry(Agent):

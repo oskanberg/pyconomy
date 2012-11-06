@@ -3,7 +3,7 @@
 import math
 from multiprocessing import Process, Lock
 
-class NaturalResource():
+class NaturalResource(object):
 
     def __init__(self, amount):
         self.__resource = self.generatePrimes(amount)
