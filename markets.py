@@ -30,7 +30,9 @@ class Market(object):
     def _removeListing(self, typeName, entry):
         if typeName in self.__all:
             self.__all[typeName].remove(entry)
-        return True
+            return True
+        else:
+            return False
     
     ## Get all listings of the given type
     def _getAllListings(self, typeName):
@@ -42,7 +44,25 @@ class Market(object):
     def _getAllTypes(self):
         return self.__all.keys()
 
+class FoodMarket(Market):
 
+    def __init__(self):
+        Market.__init__(self)
+
+    def addListing(self, food):
+        self._addListing("food", food)
+
+    def getAmbientPrice(self):
+        pass
+
+    def getLowestprice(self):
+        l = [listing.value for listing in self._getAllListings("food")]
+        return min(l)
+
+    def buyAtPrice(self, price):
+        # assuming we will always buy cheaper if possible
+        if self.getLowestPrice() < price:
+            
 
 ##
 # All labour gets negotiated through one'a these
@@ -58,7 +78,7 @@ class LabourMarket(Market):
         self._addListing("labour", labour)
 
     # Get mean price of listings
-    def getAmbientPrice():
+    def getAmbientPrice(self):
         l = [listing.value for listing in self._getAllListings("labour")]
         return sum(l) / float(len(l))
     
